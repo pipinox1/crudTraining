@@ -1,15 +1,25 @@
 package com.eduardo.crud.entity.db;
 
+import java.io.Serializable;
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
-import lombok.Data;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,7 +27,9 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class Person {
+@JsonIgnoreProperties
+
+public class Person implements Serializable {
 	
 	
 	@Column(name="name_person",updatable=true,nullable= false,length=20)
@@ -25,6 +37,11 @@ public class Person {
 	
 	@Column(name="lastname_person",updatable=true,nullable= false,length=20)
 	private String lastnamePerson;
+	
+	 @Column(name="create_at_person", nullable = false, updatable = false)
+	 @Temporal(TemporalType.TIMESTAMP)
+	 @CreatedDate
+	 private Date createdAt;
 	
 	@Column(name="age_person",updatable=true,nullable= false)
 	private int agePerson;
@@ -35,10 +52,10 @@ public class Person {
 	
 	@Id
 	@Column(name="idcard_person",updatable=true,nullable= false,length=10)
-	private int idCardPerson;
+	private String idCardPerson;
 	
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="id_blood_type",nullable=false)
 	private BloodType bloodTypePerson;
 	

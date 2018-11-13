@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.eduardo.crud.entity.db.Person;
 
-@Repository
+@Repository("personRepository")
 public interface PersonRepository extends JpaRepository<Person,Serializable>{
 	
 	List<Person> findAll();
